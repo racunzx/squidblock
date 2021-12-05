@@ -1,0 +1,21 @@
+Here is the procedure:
+
+# vi /etc/squid/deny_websites
+.yahoo.com
+.google.com
+.whatever.com
+
+wq:
+
+# vi /etc/squid/squid.conf
+
+acl deny_websites dstdomain “/etc/squid/deny_websites”
+http_access deny deny_websites
+
+Save and close the file. Restart Squid:
+# service squid restart
+
+Let us say you would like to deny access for anyone who browses to a URL
+with the word “bar” in it. Append following ACL:
+acl blockregexurl url_regex -i bar
+http_access deny blockregexurl
